@@ -15,7 +15,7 @@ class SubSchoolAccountVC: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if UserData.auth_token.count < 10{
+        if UserData.authHashCode.count < 10{
             setupVC_Add()
             self.present(getNavVC(view: SubPolicyWebView()), animated: true)
         }else{

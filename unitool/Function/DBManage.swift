@@ -15,8 +15,7 @@ class User: Object {
     @objc dynamic var email = ""
     @objc dynamic var access_token = ""
     @objc dynamic var refresh_token = ""
-    @objc dynamic var auth_token = ""
-    @objc dynamic var auth_refresh_token = ""
+    @objc dynamic var authHashCode = ""
     @objc dynamic var school = ""
 }
 
@@ -110,14 +109,14 @@ func readUser() -> User {
 func updateAuthToken(token: String){
     let UserData = Database.objects(User.self).first
     try! Database.write {
-        UserData?.auth_token = token
+        UserData?.authHashCode = token
     }
 }
 
 func updateToken(token_new: String){
     let UserData = Database.objects(User.self).first
     try! Database.write {
-        UserData?.auth_token = token_new
+        UserData?.access_token = token_new
     }
 }
 

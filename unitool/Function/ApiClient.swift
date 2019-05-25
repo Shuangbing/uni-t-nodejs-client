@@ -15,7 +15,7 @@ let API_URL = "http://localhost:3000"
 var isAgreePolicy = false
 var SUPPORT_SCHOOL = JSON("{}").arrayValue
 var USER_SCHOOL = JSON("{}").arrayValue
-let USER_UUID = UIDevice.current.identifierForVendor?.uuidString
+let USER_UUID = UIDevice.current.identifierForVendor?.uuidString ?? "null"
 var isTOKEN_UPDATED = false
 
 var selectSchoolNo = -1
@@ -23,6 +23,7 @@ var USERNAME = ""
 var PASSWORD = ""
 
 func getSupportSchool() {
+    print(USER_UUID)
     Alamofire.request(API_URL+"/school", method: .get).responseJSON { response in
         
         switch response.result {
@@ -41,24 +42,19 @@ func getSupportSchool() {
     }
 }
 
-func getTokenWithAccount(token_n: String)->String{
-    let token = base64Decoding(encodedString: UserData.access_token)
-    let newToken = base64Encoding(plainString: "\(token)/::/\(token_n)")
-    return newToken
-}
 
 func HeaderReturn(withAuth: Bool)->HTTPHeaders{
     let token = UserData.access_token
-    let authtoken = UserData.auth_token
+    let authtoken = UserData.authHashCode
     //let token2 = UserData.schoolAccount
     var header:HTTPHeaders
-    header = ["authorization": "Bearer \(token)"]
+
     switch withAuth {
     case true:
-        header = ["authorization": "Bearer \(token)", "authentication": "Bearer \(authtoken)"]
+        header = ["authorization": "Bearer \(token)", "authentication": "Bearer \(authtoken)", "uuid": USER_UUID]
         break
     case false:
-        header = ["authorization": "Bearer \(token)"]
+        header = ["authorization": "Bearer \(token)", "uuid": USER_UUID]
         break
     }
     print(header)
@@ -67,13 +63,42 @@ func HeaderReturn(withAuth: Bool)->HTTPHeaders{
 
 class UnitUser: NSObject{
     
+    func userReLogin(completion:((_ success: Bool, _ result: String?)->Void)?, user:String, psw:String) {
+        let parameters: [String: Any] = [
+            "username": user,
+            "password" : psw,
+            "uuid": USER_UUID
+        ]
+        //---------Login---------
+        Alamofire.request(API_URL+"/user/auth/login", method: .post, parameters: parameters).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                switch response.response?.statusCode {
+                case 200:
+                    let data = json["data"]
+                    updateToken(token_new: data["access_token"].stringValue)
+                    completion?(true, json["message"].stringValue)
+                    break
+                default:
+                    completion?(false, json["message"].stringValue)
+                    break
+                }
+            case .failure(_):
+                completion?(false, "could not connect service")
+            }
+        }
+        //---------Login---------
+    }
+    
     func userLogin(completion:((_ success: Bool, _ result: String?,_ code: Int)->Void)?, user:String, psw:String) {
         let parameters: [String: Any] = [
             "username": user,
             "password" : psw,
+            "uuid": USER_UUID
         ]
         //---------Login---------
-        Alamofire.request(API_URL+"/user/login", method: .post, parameters: parameters).responseJSON { response in
+        Alamofire.request(API_URL+"/user/auth/login", method: .post, parameters: parameters).responseJSON { response in
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
@@ -107,6 +132,9 @@ class UnitUser: NSObject{
                 switch response.response?.statusCode {
                 case 200:
                     completion?(false, json["message"].stringValue, json["data"])
+                    break
+                case 403:
+                    UIApplication.shared.keyWindow?.rootViewController?.present(ReLoginViewController(), animated: true)
                     break
                 default:
                     completion?(false, json["message"].stringValue, JSON())
@@ -155,7 +183,7 @@ class UnitUser: NSObject{
             "school_id" : sch,
         ]
         //---------Register---------
-        Alamofire.request(API_URL+"/user/register", method: .post, parameters: parameters).responseJSON { response in
+        Alamofire.request(API_URL+"/user/auth/register", method: .post, parameters: parameters).responseJSON { response in
             print(response.result)
             switch response.result {
             case .success(let value):
@@ -163,13 +191,6 @@ class UnitUser: NSObject{
                 print(json)
                 switch response.response?.statusCode {
                 case 200:
-                    let UserData = User()
-                    let data = json["data"]
-                    UserData.id = data["uid"].stringValue
-                    UserData.email = data["usr"].stringValue
-                    UserData.access_token = data["access_token"].stringValue
-                    UserData.school = data["school_id"].stringValue
-                    addUser(user: UserData)
                     completion?(true, json["message"].stringValue)
                     break
                 default:
@@ -184,19 +205,18 @@ class UnitUser: NSObject{
     }
     
     func userUpdateToken(completion:((_ success: Bool, _ result: String?)->Void)?) {
-        let parameters: [String: Any] = [
-            "uid": UserData.id,
-            //"refresh_token": UserData.refresh_token,
-            "uuid" : USER_UUID!,
-        ]
         //---------userUpdateToken---------
-        Alamofire.request(API_URL+"/user/refresh", method: .post, parameters: parameters).responseJSON { response in
+        Alamofire.request(API_URL+"/user/auth/refresh", method: .get, headers: HeaderReturn(withAuth: false)).responseJSON { response in
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
                 switch response.response?.statusCode {
                 case 200:
-                    completion?(false, json["message"].stringValue)
+                    completion?(true, json["message"].stringValue)
+                    updateToken(token_new: json["data"]["access_token"].stringValue)
+                    break
+                case 403:
+                    UIApplication.shared.keyWindow?.rootViewController?.present(ReLoginViewController(), animated: true)
                     break
                 default:
                     completion?(false, json["message"].stringValue)
@@ -232,23 +252,24 @@ class UnitUser: NSObject{
     
     func changePassword(completion:((_ success: Bool, _ result: String?)->Void)?, psw_now:String, psw_new:String) {
         let parameters: [String: Any] = [
-            "password": psw_now,
-            "newpassword": psw_new,
+            "password_old": psw_now,
+            "password_new": psw_new,
         ]
         //---------changePassword---------
-        Alamofire.request(API_URL+"user/changePassword", method: .get, parameters: parameters, headers: HeaderReturn(withAuth: false)).responseJSON { response in
+        Alamofire.request(API_URL+"/user/auth/password", method: .put, parameters: parameters, headers: HeaderReturn(withAuth: false)).responseJSON { response in
             switch response.result {
-            case .success:
-                if let jsonData = response.result.value {
-                    let json = JSON(jsonData)
-                    if json["code"] == 200 {
-                        completion?(true, json["message"].stringValue)
-                    }else{
-                        completion?(false, json["message"].stringValue)
-                    }
+            case .success(let value):
+                let json = JSON(value)
+                switch response.response?.statusCode {
+                case 200:
+                    completion?(true, json["message"].stringValue)
+                    break
+                default:
+                    completion?(false, json["message"].stringValue)
+                    break
                 }
-            case .failure:
-                completion?(false, "サービスに接続できません")
+            case .failure(_):
+                completion?(false, "could not connect service")
             }
         }
         //---------changePassword---------
@@ -259,7 +280,7 @@ class UnitUser: NSObject{
             "password": psw_now,
         ]
         //---------delectAccount---------
-        Alamofire.request(API_URL+"user/delectAccount", method: .get, parameters: parameters, headers: HeaderReturn(withAuth: false)).responseJSON { response in
+        Alamofire.request(API_URL+"/user", method: .delete, parameters: parameters, headers: HeaderReturn(withAuth: false)).responseJSON { response in
             switch response.result {
             case .success:
                 if let jsonData = response.result.value {
@@ -278,7 +299,7 @@ class UnitUser: NSObject{
     }
     
     func logout(){
-        Alamofire.request(API_URL+"user/logout", method: .get, headers: HeaderReturn(withAuth: false))
+        Alamofire.request(API_URL+"/user/auth/logout", method: .get, headers: HeaderReturn(withAuth: false))
     }
     
 }
@@ -299,6 +320,9 @@ class UnitSchool: NSObject{
                 case 200:
                     completion?(true, json["message"].stringValue)
                     updateAuthToken(token: json["data"]["school_account"].stringValue)
+                    break
+                case 403:
+                    UIApplication.shared.keyWindow?.rootViewController?.present(ReLoginViewController(), animated: true)
                     break
                 default:
                     completion?(false, json["message"].stringValue)
@@ -321,6 +345,9 @@ class UnitSchool: NSObject{
                 case 200:
                     completion?(true, json["message"].stringValue, json["data"].arrayValue)
                     break
+                case 403:
+                    UIApplication.shared.keyWindow?.rootViewController?.present(ReLoginViewController(), animated: true)
+                    break
                 default:
                     completion?(false, json["message"].stringValue, [])
                     break
@@ -341,6 +368,9 @@ class UnitSchool: NSObject{
                 switch response.response?.statusCode {
                 case 200:
                     completion?(true, json["message"].stringValue, json["data"].arrayValue)
+                    break
+                case 403:
+                    UIApplication.shared.keyWindow?.rootViewController?.present(ReLoginViewController(), animated: true)
                     break
                 default:
                     completion?(false, json["message"].stringValue, [])
@@ -363,6 +393,9 @@ class UnitSchool: NSObject{
                 switch response.response?.statusCode {
                 case 200:
                     completion?(true, json["message"].stringValue, json["data"].arrayValue)
+                    break
+                case 403:
+                    UIApplication.shared.keyWindow?.rootViewController?.present(ReLoginViewController(), animated: true)
                     break
                 default:
                     completion?(false, json["message"].stringValue, [])
@@ -390,6 +423,9 @@ class UnitSchool: NSObject{
                 switch response.response?.statusCode {
                 case 200:
                     completion?(true, json["message"].stringValue, [])
+                    break
+                case 403:
+                    UIApplication.shared.keyWindow?.rootViewController?.present(ReLoginViewController(), animated: true)
                     break
                 default:
                     completion?(false, json["message"].stringValue, [])

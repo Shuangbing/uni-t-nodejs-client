@@ -38,7 +38,7 @@ class HomeTabBarController: UITabBarController{
         }
         
         for schoolData in SUPPORT_SCHOOL{
-            if schoolData["id"].stringValue == UserData.auth_token{
+            if schoolData["school_id"].stringValue == UserData.school{
                 USER_SCHOOL = schoolData.arrayValue
             }
         }

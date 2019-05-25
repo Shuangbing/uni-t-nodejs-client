@@ -419,10 +419,18 @@ class selectSchoolView: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let CellName = SUPPORT_SCHOOL[indexPath.row]["school_name"].stringValue
-        let CellType = "時間割✅　出席登録✅　成績照会✅　休講情報✅　Wi-Fi認証✅"
+        let CellType = "時間割\(returnTypeIsSupport(type: "timetable", index: indexPath.row))　出席登録\(returnTypeIsSupport(type: "attend", index: indexPath.row))　成績照会\(returnTypeIsSupport(type: "score", index: indexPath.row))　Wi-Fi認証\(returnTypeIsSupport(type: "wlan", index: indexPath.row))"
         let cell = getSchoolCell(name: CellName, type: CellType, wlan: SUPPORT_SCHOOL[indexPath.row]["wlan"].intValue, attend: SUPPORT_SCHOOL[indexPath.row]["attend"].intValue, timetable: SUPPORT_SCHOOL[indexPath.row]["timetable"].intValue,score: SUPPORT_SCHOOL[indexPath.row]["score"].intValue)
         
         return cell
+    }
+    
+    func returnTypeIsSupport(type: String, index: Int) -> String{
+        if (SUPPORT_SCHOOL[index]["school_support"][type].boolValue) {
+            return "✅"
+        }else{
+            return "⛔"
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -451,17 +459,19 @@ class selectSchoolView: UIViewController, UITableViewDelegate, UITableViewDataSo
         typeATTEND.image = UIImage(named: "attend_\(attend)")
         typeTIMETABLE.image = UIImage(named: "timetable_\(timetable)")
         typeSCORE.image = UIImage(named: "score_\(score)")
-        print(wlan,attend,timetable,score)
         lable_School.text = name
         lable_Type.text = type
+        lable_Type.font = UIFont.boldSystemFont(ofSize: 13)
         typeView.addSubview(typeWIFI)
         typeView.addSubview(typeSCORE)
         typeView.addSubview(typeTIMETABLE)
         typeView.addSubview(typeATTEND)
         cell.addSubview(lable_School)
+        cell.addSubview(lable_Type)
         cell.addSubview(typeView)
         lable_School.font = UIFont.systemFont(ofSize: 20)
         
+        /*
         typeWIFI.snp.makeConstraints { (make) in
             make.left.top.equalTo(typeView)
             make.width.height.equalTo(16)
@@ -481,12 +491,17 @@ class selectSchoolView: UIViewController, UITableViewDelegate, UITableViewDataSo
             make.left.equalTo(typeTIMETABLE.snp.right).offset(5)
             make.width.height.equalTo(16)
         }
+         */
         lable_School.snp.makeConstraints { (make) in
             make.left.width.equalTo(cell).offset(10)
             make.top.equalTo(cell).offset(15)
             make.height.equalTo(cell).dividedBy(3)
         }
-        
+        lable_Type.snp.makeConstraints { (make) in
+            make.left.width.equalTo(cell).offset(10)
+            make.top.equalTo(lable_School.snp.bottom).offset(1)
+            make.height.equalTo(cell).dividedBy(3)
+        }
         typeView.snp.makeConstraints { (make) in
             make.left.width.equalTo(lable_School)
             make.top.equalTo(lable_School.snp.bottom).offset(5)
