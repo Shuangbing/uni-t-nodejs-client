@@ -1,4 +1,4 @@
-# ユニツ Node.JS Client
+# ユニツ iOS Client (Node.JS Server)
 ![swift-version](https://img.shields.io/badge/Swift-5.0-blue.svg)  ![license-icon](https://img.shields.io/github/license/Shuangbing/uni-t-nodejs-client.svg) ![version-icon](https://img.shields.io/badge/Version-2.0.1-blueviolet.svg)
 
 ![uni-t-logo](https://raw.githubusercontent.com/Shuangbing/uni-t-nodejs-client/master/unitool/Assets.xcassets/Uni-T%20Logo/welcome.imageset/web_hi_res_512.png)
