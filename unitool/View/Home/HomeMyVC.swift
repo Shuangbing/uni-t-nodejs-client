@@ -22,6 +22,7 @@ class HomeMyVC: UIViewController{
         showAlert(type: 3, msg: "読み取り中")
         tableView.isUserInteractionEnabled = false
         SchoolAPI.getScore(completion: { (success, msg, data) in
+            self.tableView.isUserInteractionEnabled = true
             switch success{
             case true:
                 scoreData = data
@@ -30,7 +31,6 @@ class HomeMyVC: UIViewController{
                 attendData = []
                 showAlert(type: 2, msg: msg ?? "エラー")
             }
-            self.tableView.isUserInteractionEnabled = true
         })
         
     }

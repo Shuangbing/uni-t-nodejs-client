@@ -26,14 +26,14 @@ class SubVerifyEmail: UIViewController, UITextFieldDelegate{
         self.title = "メールアドレス認証"
         self.view.backgroundColor = .white
         
-        InputOneTimeCode.Lable.text = "ワンタイムコード"
+        InputOneTimeCode.Lable.text = "認証コード"
         InputOneTimeCode.Input.keyboardType = .numberPad
         InputOneTimeCode.Input.contentMode = .center
         InputOneTimeCode.Input.becomeFirstResponder()
         InputOneTimeCode.Input.delegate = self
         
         
-        InputreSendMail.setTitle("ワンタイムコード送信", for: .normal)
+        InputreSendMail.setTitle("認証コード送信", for: .normal)
         InputreSendMail.addTarget(self, action: #selector(reSendMailButtonEvent), for: .touchUpInside)
         
         
@@ -76,7 +76,7 @@ class SubVerifyEmail: UIViewController, UITextFieldDelegate{
     }
     
     func reSendMail(){
-        UserApi.userVerifyLogin(completion: { (success, msg, code) in
+        UserApi.verifyReSendMail(completion: { (success, msg, code) in
             switch success{
             case true:
                 self.InputSubmit.isEnabled = true
@@ -84,7 +84,7 @@ class SubVerifyEmail: UIViewController, UITextFieldDelegate{
             case false:
                 showAlert(type: 3, msg: msg ?? "エラー")
             }
-        }, user: username , psw: password, one: "-1")
+        }, user: username , psw: password)
     }
     
 

@@ -113,6 +113,10 @@ class UnitUser: NSObject{
                     addUser(user: UserData)
                     completion?(true, "ok", 0)
                     break
+                case 407:
+                    let verifyview = SubVerifyEmail()
+
+                    LoginViewController.current()?.present(getNavVC(view: verifyview), animated: true)
                 default:
                     completion?(false, json["message"].stringValue, 1)
                     break
@@ -134,7 +138,7 @@ class UnitUser: NSObject{
                     completion?(false, json["message"].stringValue, json["data"])
                     break
                 case 403:
-                    UIApplication.shared.keyWindow?.rootViewController?.present(ReLoginViewController(), animated: true)
+                    UIViewController.current()?.present(ReLoginViewController(), animated: true)
                     break
                 default:
                     completion?(false, json["message"].stringValue, JSON())
@@ -144,6 +148,31 @@ class UnitUser: NSObject{
                 completion?(false, "could not connect service", JSON())
             }
         }
+    }
+    
+    func verifyReSendMail(completion:((_ success: Bool, _ result: String?,_ code: Int)->Void)?, user:String, psw:String) {
+        let parameters: [String: Any] = [
+        "username": user,
+        "password" : psw,
+        "uuid": USER_UUID
+        ]
+        //---------Login---------
+        Alamofire.request(API_URL+"/user/auth/verify/resend", method: .post, parameters: parameters).responseJSON { response in
+        switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                switch response.response?.statusCode {
+                case 200:
+                    completion?(true, json["message"]["data"].stringValue, 0)
+                    break
+                default:
+                    completion?(false, json["message"].stringValue, 1)
+                    break
+                }
+                case .failure(_):
+                    completion?(false, "could not connect service", 1)
+                }
+                }
     }
     
     func userVerifyLogin(completion:((_ success: Bool, _ result: String?,_ code: Int)->Void)?, user:String, psw:String, one:String) {
@@ -216,7 +245,7 @@ class UnitUser: NSObject{
                     updateToken(token_new: json["data"]["access_token"].stringValue)
                     break
                 case 403:
-                    UIApplication.shared.keyWindow?.rootViewController?.present(ReLoginViewController(), animated: true)
+                    UIViewController.current()?.present(ReLoginViewController(), animated: true)
                     break
                 default:
                     completion?(false, json["message"].stringValue)

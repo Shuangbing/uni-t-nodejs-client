@@ -13,7 +13,7 @@ import WebKit
 class SubPolicyWebView: UIViewController, UIWebViewDelegate{
     
     
-    var url_string = "\(API_URL)"
+    var url_string = "https://www.uni-t.cc/about/policy/"
     let webView = WKWebView()
     
     private lazy var AgreeReturn : UIButton = {

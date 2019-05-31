@@ -419,14 +419,14 @@ class selectSchoolView: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let CellName = SUPPORT_SCHOOL[indexPath.row]["school_name"].stringValue
-        let CellType = "時間割\(returnTypeIsSupport(type: "timetable", index: indexPath.row))　出席登録\(returnTypeIsSupport(type: "attend", index: indexPath.row))　成績照会\(returnTypeIsSupport(type: "score", index: indexPath.row))　Wi-Fi認証\(returnTypeIsSupport(type: "wlan", index: indexPath.row))"
+        let CellType = "時間割\(returnTypeIsSupport(type: "useTimetable", index: indexPath.row))　出席登録\(returnTypeIsSupport(type: "useAttend", index: indexPath.row))　成績照会\(returnTypeIsSupport(type: "useScore", index: indexPath.row))　Wi-Fi認証\(returnTypeIsSupport(type: "useWlan", index: indexPath.row))"
         let cell = getSchoolCell(name: CellName, type: CellType, wlan: SUPPORT_SCHOOL[indexPath.row]["wlan"].intValue, attend: SUPPORT_SCHOOL[indexPath.row]["attend"].intValue, timetable: SUPPORT_SCHOOL[indexPath.row]["timetable"].intValue,score: SUPPORT_SCHOOL[indexPath.row]["score"].intValue)
         
         return cell
     }
     
     func returnTypeIsSupport(type: String, index: Int) -> String{
-        if (SUPPORT_SCHOOL[index]["school_support"][type].boolValue) {
+        if (SUPPORT_SCHOOL[index]["support_list"][type].boolValue) {
             return "✅"
         }else{
             return "⛔"
