@@ -41,7 +41,7 @@ class SubSchoolAccountVC: UIViewController{
     }
     
     @objc func delSchoolAccount(){
-        updateToken(token_new: "none")
+        updateAuthToken(token: "none")
         showAlert(type: 1, msg: "削除しました")
         self.dismiss(animated: true)
     }

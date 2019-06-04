@@ -164,13 +164,14 @@ class LoginViewController : UIViewController {
         view.addSubview(LoginButton)
         view.addSubview(RegisterReturn)
         
+        ForgetPsw.isHidden = true
         ForgetPsw.text = "パスワード忘れ"
         ForgetPsw.font = UIFont.boldSystemFont(ofSize: 14)
         ForgetPsw.textColor = Color_Sub
         ForgetPsw.textAlignment = .center
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(forgetPswTapped(tapGestureRecognizer:)))
-        ForgetPsw.isUserInteractionEnabled = true
-        ForgetPsw.addGestureRecognizer(tapGestureRecognizer)
+        //let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(forgetPswTapped(tapGestureRecognizer:)))
+        //ForgetPsw.isUserInteractionEnabled = true
+        //ForgetPsw.addGestureRecognizer(tapGestureRecognizer)
         
         LoginInput.Lable.text = "メールアドレス"
         LoginInput.Input.keyboardType = .emailAddress
@@ -226,16 +227,9 @@ class LoginViewController : UIViewController {
         UserApi.userLogin(completion: { (success, msg, code) in
             switch success{
             case true:
-                
                 self.present(HomeTabBarController(), animated: true)
             case false:
-                if code == 422{
-                    //メールアドレス認証
-                    let verifyview = SubVerifyEmail()
-                    verifyview.username = self.LoginInput.Input.text ?? ""
-                    verifyview.password = self.PswInput.Input.text ?? ""
-                    self.present(getNavVC(view: verifyview), animated: true)
-                }else{showAlert(type: 2, msg: msg ?? "エラー")}
+                showAlert(type: 2, msg: msg ?? "エラー")
             }
             sender.setTitle("ログイン", for: .normal)
             sender.isUserInteractionEnabled = true

@@ -133,7 +133,7 @@ class SubAccountSetting: UIViewController{
         delectAccountButton.addTarget(self, action: #selector(delectAccountEvent), for: .touchUpInside)
         delectAccountButton.setBackgroundImage(UIImage(color: UIColor.red.lighter()), for: .normal)
         delectAccountButton.setBackgroundImage(UIImage(color: UIColor.red.lighter().darkened()), for: .highlighted)
-        
+        delectAccountButton.isHidden = true
         let schoolName = UserData.school
         if (schoolName != "") {SchoolInput.Input.text = schoolName}
         

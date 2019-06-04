@@ -65,22 +65,29 @@ class SubVerifyEmail: UIViewController, UITextFieldDelegate{
     }
     
     @objc func submitButtonEvent(){
-        UserApi.userVerifyLogin(completion: { (success, msg, code) in
+        UserApi.userVerifyLogin(completion: { (success, msg) in
             switch success{
             case true:
-                self.present(HomeTabBarController(), animated: true)
+                UserApi.userLogin(completion: { (success, msg, code) in
+                    switch success{
+                    case true:
+                        self.present(HomeTabBarController(), animated: true)
+                    case false:
+                        showAlert(type: 2, msg: msg ?? "エラー")
+                    }
+                }, user: self.username, psw: self.password)
             case false:
                 showAlert(type: 2, msg: msg ?? "エラー")
             }
-        }, user: username , psw: password, one: InputOneTimeCode.Input.text ?? "")
+        }, user: username , psw: password, vaildCode: InputOneTimeCode.Input.text ?? "")
     }
     
     func reSendMail(){
-        UserApi.verifyReSendMail(completion: { (success, msg, code) in
+        UserApi.verifyReSendMail(completion: { (success, msg) in
             switch success{
             case true:
                 self.InputSubmit.isEnabled = true
-                self.present(HomeTabBarController(), animated: true)
+                showAlert(type: 3, msg: msg ?? "完了")
             case false:
                 showAlert(type: 3, msg: msg ?? "エラー")
             }

@@ -97,6 +97,7 @@ func addSubject(subject: TimeTable){
 
 func addUser(user: User) {
     try! Database.write {
+        Database.delete(Database.objects(User.self))
         Database.add(user)
     }
 }

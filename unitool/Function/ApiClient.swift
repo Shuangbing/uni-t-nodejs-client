@@ -11,16 +11,17 @@ import StatusAlert
 import Alamofire
 import SwiftyJSON
 
-let API_URL = "http://localhost:3000"
+let API_URL = "https://api.uni-t.cc"
 var isAgreePolicy = false
 var SUPPORT_SCHOOL = JSON("{}").arrayValue
 var USER_SCHOOL = JSON("{}").arrayValue
 let USER_UUID = UIDevice.current.identifierForVendor?.uuidString ?? "null"
 var isTOKEN_UPDATED = false
-
 var selectSchoolNo = -1
 var USERNAME = ""
 var PASSWORD = ""
+
+let InternetErrorMessage = "サービスに接続できません"
 
 func getSupportSchool() {
     print(USER_UUID)
@@ -85,7 +86,7 @@ class UnitUser: NSObject{
                     break
                 }
             case .failure(_):
-                completion?(false, "could not connect service")
+                completion?(false, InternetErrorMessage)
             }
         }
         //---------Login---------
@@ -101,6 +102,7 @@ class UnitUser: NSObject{
         Alamofire.request(API_URL+"/user/auth/login", method: .post, parameters: parameters).responseJSON { response in
             switch response.result {
             case .success(let value):
+                
                 let json = JSON(value)
                 switch response.response?.statusCode {
                 case 200:
@@ -113,16 +115,17 @@ class UnitUser: NSObject{
                     addUser(user: UserData)
                     completion?(true, "ok", 0)
                     break
-                case 407:
+                case 402:
                     let verifyview = SubVerifyEmail()
-
+                    verifyview.username = user
+                    verifyview.password = psw
                     LoginViewController.current()?.present(getNavVC(view: verifyview), animated: true)
                 default:
                     completion?(false, json["message"].stringValue, 1)
                     break
                 }
             case .failure(_):
-                completion?(false, "could not connect service", 1)
+                completion?(false, InternetErrorMessage, 1)
             }
         }
         //---------Login---------
@@ -137,7 +140,7 @@ class UnitUser: NSObject{
                 case 200:
                     completion?(false, json["message"].stringValue, json["data"])
                     break
-                case 403:
+                case 411:
                     UIViewController.current()?.present(ReLoginViewController(), animated: true)
                     break
                 default:
@@ -145,12 +148,12 @@ class UnitUser: NSObject{
                     break
                 }
             case .failure(_):
-                completion?(false, "could not connect service", JSON())
+                completion?(false, InternetErrorMessage, JSON())
             }
         }
     }
     
-    func verifyReSendMail(completion:((_ success: Bool, _ result: String?,_ code: Int)->Void)?, user:String, psw:String) {
+    func verifyReSendMail(completion:((_ success: Bool, _ result: String?)->Void)?, user:String, psw:String) {
         let parameters: [String: Any] = [
         "username": user,
         "password" : psw,
@@ -161,48 +164,46 @@ class UnitUser: NSObject{
         switch response.result {
             case .success(let value):
                 let json = JSON(value)
+                print(json["data"])
                 switch response.response?.statusCode {
                 case 200:
-                    completion?(true, json["message"]["data"].stringValue, 0)
+                    completion?(true, json["message"].stringValue)
                     break
                 default:
-                    completion?(false, json["message"].stringValue, 1)
+                    completion?(false, json["message"].stringValue)
                     break
                 }
                 case .failure(_):
-                    completion?(false, "could not connect service", 1)
+                    completion?(false, InternetErrorMessage)
                 }
-                }
+            }
     }
     
-    func userVerifyLogin(completion:((_ success: Bool, _ result: String?,_ code: Int)->Void)?, user:String, psw:String, one:String) {
-        //let time = NSDate().timeIntervalSince1970
-        
-        //---------userVerifyLogin---------
-        /*
-         Alamofire.request(API_URL+"verify_login", method: .post, parameters: parameters).responseJSON { response in
-         switch response.result {
-         case .success:
-         if let jsonData = response.result.value {
-         let json = JSON(jsonData)
-         if json["code"] == 200 {
-         let UserData = User()
-         UserData.id = json["data"]["client"]["id"].intValue
-         UserData.email = json["data"]["client"]["email"].stringValue
-         UserData.token = base64Encoding(plainString: "\(APP_ID):\(json["data"]["access_token"].stringValue):\(UserData.id)")
-         UserData.refresh_token = json["data"]["refresh_token"].stringValue
-         UserData.school = json["data"]["client"]["school"].intValue
-         addUser(user: UserData)
-         completion?(true, json["message"].stringValue,json["code"].intValue )
-         }else{
-         completion?(false, json["message"].stringValue,json["code"] .intValue)
-         }
-         }
-         case .failure:
-         completion?(false, "サービスに接続できません",401)
-         }
-         }*/
-        //---------userVerifyLogin---------
+    func userVerifyLogin(completion:((_ success: Bool, _ result: String?)->Void)?, user:String, psw:String, vaildCode:String) {
+        let parameters: [String: Any] = [
+            "username": user,
+            "password" : psw,
+            "vaild": vaildCode,
+            "uuid": USER_UUID
+        ]
+        //---------Login---------
+        Alamofire.request(API_URL+"/user/auth/verify", method: .post, parameters: parameters).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                print(json["data"])
+                switch response.response?.statusCode {
+                case 200:
+                    completion?(true, json["message"].stringValue)
+                    break
+                default:
+                    completion?(false, json["message"].stringValue)
+                    break
+                }
+            case .failure(_):
+                completion?(false, InternetErrorMessage)
+            }
+        }
     }
     
     func userRegister(completion:((_ success: Bool, _ result: String?)->Void)?, user:String, psw:String, sch:String) {
@@ -227,7 +228,7 @@ class UnitUser: NSObject{
                     break
                 }
             case .failure(_):
-                completion?(false, "could not connect service")
+                completion?(false, InternetErrorMessage)
             }
         }
         //---------Register---------
@@ -244,7 +245,7 @@ class UnitUser: NSObject{
                     completion?(true, json["message"].stringValue)
                     updateToken(token_new: json["data"]["access_token"].stringValue)
                     break
-                case 403:
+                case 411:
                     UIViewController.current()?.present(ReLoginViewController(), animated: true)
                     break
                 default:
@@ -252,7 +253,7 @@ class UnitUser: NSObject{
                     break
                 }
             case .failure(_):
-                completion?(false, "could not connect service")
+                completion?(false, InternetErrorMessage)
             }
         }
         //---------userUpdateToken---------
@@ -273,7 +274,7 @@ class UnitUser: NSObject{
                     }
                 }
             case .failure:
-                completion?(false, "サービスに接続できません", "-")
+                completion?(false, InternetErrorMessage, "-")
             }
         }
         //---------getUniCoin---------
@@ -298,7 +299,7 @@ class UnitUser: NSObject{
                     break
                 }
             case .failure(_):
-                completion?(false, "could not connect service")
+                completion?(false, InternetErrorMessage)
             }
         }
         //---------changePassword---------
@@ -321,7 +322,7 @@ class UnitUser: NSObject{
                     }
                 }
             case .failure:
-                completion?(false, "サービスに接続できません")
+                completion?(false, InternetErrorMessage)
             }
         }
         //---------delectAccount---------
@@ -350,7 +351,7 @@ class UnitSchool: NSObject{
                     completion?(true, json["message"].stringValue)
                     updateAuthToken(token: json["data"]["school_account"].stringValue)
                     break
-                case 403:
+                case 411:
                     UIApplication.shared.keyWindow?.rootViewController?.present(ReLoginViewController(), animated: true)
                     break
                 default:
@@ -358,7 +359,7 @@ class UnitSchool: NSObject{
                     break
                 }
             case .failure(_):
-                completion?(false, "could not connect service")
+                completion?(false, InternetErrorMessage)
             }
         }
         //---------verify---------
@@ -374,7 +375,7 @@ class UnitSchool: NSObject{
                 case 200:
                     completion?(true, json["message"].stringValue, json["data"].arrayValue)
                     break
-                case 403:
+                case 411:
                     UIApplication.shared.keyWindow?.rootViewController?.present(ReLoginViewController(), animated: true)
                     break
                 default:
@@ -382,7 +383,7 @@ class UnitSchool: NSObject{
                     break
                 }
             case .failure(_):
-                completion?(false, "could not connect service", [])
+                completion?(false, InternetErrorMessage, [])
             }
         }
         //---------verify---------
@@ -398,7 +399,7 @@ class UnitSchool: NSObject{
                 case 200:
                     completion?(true, json["message"].stringValue, json["data"].arrayValue)
                     break
-                case 403:
+                case 411:
                     UIApplication.shared.keyWindow?.rootViewController?.present(ReLoginViewController(), animated: true)
                     break
                 default:
@@ -406,7 +407,7 @@ class UnitSchool: NSObject{
                     break
                 }
             case .failure(_):
-                completion?(false, "could not connect service", [])
+                completion?(false, InternetErrorMessage, [])
             }
 
         }
@@ -423,7 +424,7 @@ class UnitSchool: NSObject{
                 case 200:
                     completion?(true, json["message"].stringValue, json["data"].arrayValue)
                     break
-                case 403:
+                case 411:
                     UIApplication.shared.keyWindow?.rootViewController?.present(ReLoginViewController(), animated: true)
                     break
                 default:
@@ -431,7 +432,7 @@ class UnitSchool: NSObject{
                     break
                 }
             case .failure(_):
-                completion?(false, "could not connect service", [])
+                completion?(false, InternetErrorMessage, [])
             }
         }
         //---------getAttendList---------
@@ -453,7 +454,7 @@ class UnitSchool: NSObject{
                 case 200:
                     completion?(true, json["message"].stringValue, [])
                     break
-                case 403:
+                case 411:
                     UIApplication.shared.keyWindow?.rootViewController?.present(ReLoginViewController(), animated: true)
                     break
                 default:
@@ -461,19 +462,13 @@ class UnitSchool: NSObject{
                     break
                 }
             case .failure(_):
-                completion?(false, "could not connect service", [])
+                completion?(false, InternetErrorMessage, [])
             }
         }
         //---------getAttendList---------
     }
     
 }
-
-func RSA_SCHOOL_ACCOUNT(user: String, psw:String)->String{
-    return "good"
-}
-
-
 
 
 func showAlert(type: Int, msg: String) {
@@ -483,30 +478,15 @@ func showAlert(type: Int, msg: String) {
     case 1:
         statusAlert.title = "完了"
         statusAlert.image = UIImage(named: "success")
-        //HapticFeedback.Notification.successSound()
-        if #available(iOS 10.0, *) {
-            HapticFeedback.Notification.success()
-        } else {
-            // Fallback on earlier versions
-        }
+        HapticFeedback.Notification.pop()
     case 2:
         statusAlert.title = "エラー"
         statusAlert.image = UIImage(named: "error")
-        //HapticFeedback.Notification.warningSound()
-        if #available(iOS 10.0, *) {
-            HapticFeedback.Notification.warning()
-        } else {
-            // Fallback on earlier versions
-        }
+        HapticFeedback.Notification.failed()
     case 3:
         statusAlert.title = nil
         statusAlert.image = nil
-        //HapticFeedback.Notification.warningSound()
-        if #available(iOS 10.0, *) {
-            HapticFeedback.Notification.warning()
-        } else {
-            // Fallback on earlier versions
-        }
+        HapticFeedback.Notification.failed()
     default:
         statusAlert.image = UIImage(named: "success")
     }
