@@ -155,7 +155,10 @@ class LoginViewController : UIViewController {
     }
     
     func setupVC(){
-        
+        if #available(iOS 13.0, *) {
+            self.isModalInPresentation = true
+        }
+        self.modalPresentationStyle = .fullScreen
         self.view.backgroundColor = .white
         view.addSubview(logoIMG)
         view.addSubview(LoginInput)
@@ -295,9 +298,10 @@ class RegisterViewController : UIViewController{
     }
     
     func setupVC(){
-        
+        if #available(iOS 13.0, *) {
+            self.isModalInPresentation = true
+        }
         self.view.backgroundColor = .white
-        
         view.addSubview(logoIMG)
         view.addSubview(LoginInput)
         view.addSubview(PswInput)

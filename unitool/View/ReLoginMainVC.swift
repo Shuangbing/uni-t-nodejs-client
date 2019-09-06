@@ -50,7 +50,9 @@ class ReLoginViewController : UIViewController {
     
     
     func setupVC(){
-        
+        if #available(iOS 13.0, *) {
+            self.isModalInPresentation = false
+        }
         self.view.backgroundColor = .white
         view.addSubview(logoIMG)
         view.addSubview(LoginInput)
