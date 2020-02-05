@@ -433,7 +433,6 @@ class selectSchoolView: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print(SUPPORT_SCHOOL[indexPath.row])
         selectSchoolNo = indexPath.row
         SchoolInput.Input.text = SUPPORT_SCHOOL[indexPath.row]["school_name"].stringValue
         self.dismiss(animated: true)

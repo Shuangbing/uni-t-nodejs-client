@@ -37,6 +37,7 @@
 		50FD8E7C21AD020A009029B0 /* ComaTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FD8E7B21AD020A009029B0 /* ComaTable.swift */; };
 		581D3F458F176F6863E90740 /* Pods_unitool.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18469344E561CE1D960CBA3A /* Pods_unitool.framework */; };
 		5C9368083BDBD13981CB31EB /* Pods_unitoolTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 690BFFCAD3133B75D0102ED9 /* Pods_unitoolTests.framework */; };
+		ADDAECA423EA81ED0063C435 /* SubCanceledVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDAECA323EA81ED0063C435 /* SubCanceledVC.swift */; };
 		C6787D3F29BEF41AEA3C5973 /* Pods_unitoolUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 365E7F866A781064DF6E7F66 /* Pods_unitoolUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +101,7 @@
 		690BFFCAD3133B75D0102ED9 /* Pods_unitoolTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_unitoolTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88DB216245F7ACA189EC8D6D /* Pods-unitool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unitool.release.xcconfig"; path = "Pods/Target Support Files/Pods-unitool/Pods-unitool.release.xcconfig"; sourceTree = "<group>"; };
 		A53512C2DA4CADFD89F134CF /* Pods-unitoolUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unitoolUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-unitoolUITests/Pods-unitoolUITests.release.xcconfig"; sourceTree = "<group>"; };
+		ADDAECA323EA81ED0063C435 /* SubCanceledVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCanceledVC.swift; sourceTree = "<group>"; };
 		DCAE654E2B40AB2280666884 /* Pods-unitool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unitool.debug.xcconfig"; path = "Pods/Target Support Files/Pods-unitool/Pods-unitool.debug.xcconfig"; sourceTree = "<group>"; };
 		E81E8B1BA75E1EC4E8A53B94 /* Pods-unitoolUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unitoolUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-unitoolUITests/Pods-unitoolUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -169,15 +171,16 @@
 		503C27DA21AACD92002B966A /* Sub */ = {
 			isa = PBXGroup;
 			children = (
-				503C27D521AAA858002B966A /* SubScoreVC.swift */,
-				503C27D721AACCE7002B966A /* SubSchoolAccountVC.swift */,
-				50A3621521AD930F00062CDF /* SubEditTimeTable.swift */,
-				50A3621721B0064500062CDF /* SubColorSelector.swift */,
-				500B5D8C21B553C30058FCBA /* SubVerifyEmail.swift */,
 				50F5E70D21B94D1500BC26EE /* SubAccountSetting.swift */,
-				505CB7E921BA48AA0074D702 /* SubWebUIView.swift */,
-				5081EA4A21C25B3300BF0518 /* SubSettingTimeTable.swift */,
+				50A3621721B0064500062CDF /* SubColorSelector.swift */,
+				50A3621521AD930F00062CDF /* SubEditTimeTable.swift */,
 				505367AD21DDFCFE00C35006 /* SubPolicyWebView.swift */,
+				503C27D721AACCE7002B966A /* SubSchoolAccountVC.swift */,
+				503C27D521AAA858002B966A /* SubScoreVC.swift */,
+				5081EA4A21C25B3300BF0518 /* SubSettingTimeTable.swift */,
+				500B5D8C21B553C30058FCBA /* SubVerifyEmail.swift */,
+				505CB7E921BA48AA0074D702 /* SubWebUIView.swift */,
+				ADDAECA323EA81ED0063C435 /* SubCanceledVC.swift */,
 			);
 			path = Sub;
 			sourceTree = "<group>";
@@ -515,6 +518,7 @@
 				503C27DC21AC2EF2002B966A /* HomeTimeTableVC.swift in Sources */,
 				503C27D821AACCE7002B966A /* SubSchoolAccountVC.swift in Sources */,
 				50AC590A21A3CA4C00414BF7 /* Config.swift in Sources */,
+				ADDAECA423EA81ED0063C435 /* SubCanceledVC.swift in Sources */,
 				505CB7EA21BA48AA0074D702 /* SubWebUIView.swift in Sources */,
 				507583A221A53EEB00847F4D /* HapticFeedback.swift in Sources */,
 				50F08C3B21A3F1B100EDFE7A /* DBManage.swift in Sources */,
@@ -698,7 +702,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.uni-t.unitool";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -720,7 +724,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.uni-t.unitool";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

@@ -11,7 +11,7 @@ import StatusAlert
 import Alamofire
 import SwiftyJSON
 
-let API_URL = "https://api.uni-t.cc"
+let API_URL = "http://api.uni-t.cc"
 var isAgreePolicy = false
 var SUPPORT_SCHOOL = JSON("{}").arrayValue
 var USER_SCHOOL = JSON("{}").arrayValue
@@ -24,7 +24,6 @@ var PASSWORD = ""
 let InternetErrorMessage = "サービスに接続できません"
 
 func getSupportSchool() {
-    print(USER_UUID)
     Alamofire.request(API_URL+"/school", method: .get).responseJSON { response in
         
         switch response.result {
@@ -58,7 +57,6 @@ func HeaderReturn(withAuth: Bool)->HTTPHeaders{
         header = ["authorization": "Bearer \(token)", "uuid": USER_UUID]
         break
     }
-    print(header)
     return header
 }
 
@@ -100,9 +98,9 @@ class UnitUser: NSObject{
         ]
         //---------Login---------
         Alamofire.request(API_URL+"/user/auth/login", method: .post, parameters: parameters).responseJSON { response in
+            print(response.result)
             switch response.result {
             case .success(let value):
-                
                 let json = JSON(value)
                 switch response.response?.statusCode {
                 case 200:
@@ -164,7 +162,6 @@ class UnitUser: NSObject{
         switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                print(json["data"])
                 switch response.response?.statusCode {
                 case 200:
                     completion?(true, json["message"].stringValue)
@@ -191,7 +188,6 @@ class UnitUser: NSObject{
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                print(json["data"])
                 switch response.response?.statusCode {
                 case 200:
                     completion?(true, json["message"].stringValue)
@@ -214,11 +210,9 @@ class UnitUser: NSObject{
         ]
         //---------Register---------
         Alamofire.request(API_URL+"/user/auth/register", method: .post, parameters: parameters).responseJSON { response in
-            print(response.result)
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                print(json)
                 switch response.response?.statusCode {
                 case 200:
                     completion?(true, json["message"].stringValue)
@@ -392,6 +386,31 @@ class UnitSchool: NSObject{
     func getScore(completion:((_ success: Bool, _ result: String?, _ Data: [JSON])->Void)?) {
         //---------getScore---------
         Alamofire.request(API_URL+"/school/api/grade", headers: HeaderReturn(withAuth: true)).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                switch response.response?.statusCode {
+                case 200:
+                    completion?(true, json["message"].stringValue, json["data"].arrayValue)
+                    break
+                case 411:
+                    UIApplication.shared.keyWindow?.rootViewController?.present(ReLoginViewController(), animated: true)
+                    break
+                default:
+                    completion?(false, json["message"].stringValue, [])
+                    break
+                }
+            case .failure(_):
+                completion?(false, InternetErrorMessage, [])
+            }
+
+        }
+        //---------getScore---------
+    }
+    
+    func getCanceled(completion:((_ success: Bool, _ result: String?, _ Data: [JSON])->Void)?) {
+        //---------getScore---------
+        Alamofire.request(API_URL+"/school/api/canceled", headers: HeaderReturn(withAuth: true)).responseJSON { response in
             switch response.result {
             case .success(let value):
                 let json = JSON(value)

@@ -10,7 +10,8 @@ import UIKit
 
 
 class HomeMyVC: UIViewController{
-    let menuList = ["ログアウト","成績照会","学内アカウント設定"]
+    let menuList = ["ログアウト","成績照会","休講情報","学内アカウント設定"]
+    let newMenu = [2]
     let tableView = UITableView()
     let versionLabel = UILabel()
     
@@ -29,6 +30,23 @@ class HomeMyVC: UIViewController{
                 self.present(getNavVC(view: SubScoreVC()), animated: true)
             case false:
                 attendData = []
+                showAlert(type: 2, msg: msg ?? "エラー")
+            }
+        })
+        
+    }
+    
+    @objc func CanceldButtonEvent() {
+        showAlert(type: 3, msg: "読み取り中")
+        tableView.isUserInteractionEnabled = false
+        SchoolAPI.getCanceled(completion: { (success, msg, data) in
+            self.tableView.isUserInteractionEnabled = true
+            switch success{
+            case true:
+                canceledData = data
+                self.present(getNavVC(view: SubCanceledVC()), animated: true)
+            case false:
+                canceledData = []
                 showAlert(type: 2, msg: msg ?? "エラー")
             }
         })
@@ -134,6 +152,8 @@ extension HomeMyVC:  UITableViewDelegate, UITableViewDataSource{
         case 1:
             ScoreButtonEvent()
         case 2:
+            CanceldButtonEvent()
+        case 3:
             setSchoolACButtonEvent()
         default:
             print("no Switch")
@@ -151,21 +171,33 @@ extension HomeMyVC:  UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         let icon = UIImageView()
+        let newIcon = UIImageView()
         let text = UILabel()
         icon.image = UIImage(named: "menu_icon_\(indexPath.row)")
+        newIcon.isHidden = true
+        newIcon.image = UIImage(named: "menu_new_icon")
         text.textColor = Color_Main.lighter()
         text.text = menuList[indexPath.row]
         text.textAlignment = .center
         text.font = UIFont.boldSystemFont(ofSize: 14)
         cell.addSubview(icon)
+        cell.addSubview(newIcon)
         cell.addSubview(text)
         icon.snp.makeConstraints { (make) in
             make.height.width.equalTo(25)
             make.left.equalToSuperview()
             make.centerY.equalToSuperview()
         }
+        newIcon.snp.makeConstraints { (make) in
+            make.height.width.equalTo(20)
+            make.right.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
         text.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
+        }
+        if ((newMenu.firstIndex(of: indexPath.row)) != nil) {
+            newIcon.isHidden = false
         }
         return cell
     }

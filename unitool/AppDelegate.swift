@@ -21,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         getSupportSchool()
         UserData = readUser()
-        print(UserData)
         if UserData.id != "" {
             print("ログイン済み")
             setupUser()
