@@ -11,7 +11,7 @@ import StatusAlert
 import Alamofire
 import SwiftyJSON
 
-let API_URL = "http://api.uni-t.cc"
+let API_URL = "https://api.uni-t.cc"
 var isAgreePolicy = false
 var SUPPORT_SCHOOL = JSON("{}").arrayValue
 var USER_SCHOOL = JSON("{}").arrayValue
