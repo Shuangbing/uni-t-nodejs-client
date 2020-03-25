@@ -33,8 +33,8 @@ class ComaTable: UIView{
     }
     
     func setupView(){
-        classroom.backgroundColor = .white
-        classroom.textColor = Color_Main
+        classroom.backgroundColor = Color_Back
+        classroom.textColor = Color_GreyFont
         classroom.textAlignment = .center
         classroom.layer.cornerRadius = 3;
         classroom.clipsToBounds = true
@@ -43,7 +43,6 @@ class ComaTable: UIView{
         subject.textColor = .white
         subject.font = UIFont.boldSystemFont(ofSize: UIFont.screenFontSize)
         subject.numberOfLines = 0
-        subject.alpha = 0.6
         subject.lineBreakMode = .byCharWrapping
         subject.layer.cornerRadius = 6;
         subject.clipsToBounds = true
@@ -65,6 +64,7 @@ class ComaTable: UIView{
         
         if bg == -1{
             subject.backgroundColor = .clear
+            classroom.backgroundColor = .clear
         }else{
             subject.backgroundColor = SubjectColor[bg]
             if classroom.text == ""{classroom.text = "未設定"}

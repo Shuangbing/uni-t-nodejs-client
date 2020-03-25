@@ -490,40 +490,50 @@ class UnitSchool: NSObject{
 }
 
 
+func getTopViewController() -> UIViewController? {
+    if let rootViewController = UIApplication.shared.keyWindow?.rootViewController {
+        var topViewController: UIViewController = rootViewController
+
+        while let presentedViewController = topViewController.presentedViewController {
+            topViewController = presentedViewController
+        }
+
+        return topViewController
+    } else {
+        return nil
+    }
+}
+
 func showAlert(type: Int, msg: String) {
-    let statusAlert = StatusAlert()
-    StatusAlert.multiplePresentationsBehavior = .dismissCurrentlyPresented
+    var title = ""
     switch type {
     case 1:
-        statusAlert.title = "完了"
-        statusAlert.image = UIImage(named: "success")
+        title = "完了"
         HapticFeedback.Notification.pop()
     case 2:
-        statusAlert.title = "エラー"
-        statusAlert.image = UIImage(named: "error")
+        title = "エラー"
         HapticFeedback.Notification.failed()
     case 3:
-        statusAlert.title = nil
-        statusAlert.image = nil
+        title = "エラー"
         HapticFeedback.Notification.failed()
     default:
-        statusAlert.image = UIImage(named: "success")
+        title = "完了"
     }
-    
-    statusAlert.message = msg
-    statusAlert.canBePickedOrDismissed = false
-    statusAlert.showInKeyWindow()
+    let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+    getTopViewController()!.present(alert, animated: true) {
+        sleep(1)
+        alert.dismiss(animated: true)
+        return
+    }
 }
 
 func showWaitAlert() {
-    let statusAlert = StatusAlert()
-    statusAlert.image = nil
-    statusAlert.title = nil
-    statusAlert.isMultipleTouchEnabled = true
-    statusAlert.message = "読み取り中..."
-    statusAlert.canBePickedOrDismissed = false
-    statusAlert.showInKeyWindow()
-    //statusAlert.show(multiplePresentationsBehavior: .dismissCurrentlyPresented)
+    let alert = UIAlertController(title: nil, message: "読み取り中", preferredStyle: .alert)
+    getTopViewController()!.present(alert, animated: true) {
+        sleep(1)
+        alert.dismiss(animated: true)
+        return
+    }
 }
 
 func base64Encoding(plainString:String)->String

@@ -111,7 +111,7 @@ class SubAccountSetting: UIViewController{
     
     func setupVC(){
         self.title = "アカウント設定"
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = Color_Back
         view.addSubview(LoginInput)
         view.addSubview(PointInput)
         view.addSubview(SchoolInput)

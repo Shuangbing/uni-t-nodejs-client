@@ -51,7 +51,7 @@ class HomeTabBarController: UITabBarController{
         initSetting()
         self.view.backgroundColor = Color_Back
         self.tabBar.backgroundColor = .white
-        self.tabBar.tintColor = Color_Main
+        self.tabBar.tintColor = Color_GreyFont
         self.tabBar.isTranslucent = false
         //Init TabBarItem
         TimeTableView.tabBarItem = UITabBarItem(title: "時間割", image: UIImage(named: "bar_timetable"), tag: 0)

@@ -20,7 +20,6 @@ class HomeMyVC: UIViewController{
     }
     
     @objc func ScoreButtonEvent() {
-        showAlert(type: 3, msg: "読み取り中")
         tableView.isUserInteractionEnabled = false
         SchoolAPI.getScore(completion: { (success, msg, data) in
             self.tableView.isUserInteractionEnabled = true
@@ -37,7 +36,6 @@ class HomeMyVC: UIViewController{
     }
     
     @objc func CanceldButtonEvent() {
-        showAlert(type: 3, msg: "読み取り中")
         tableView.isUserInteractionEnabled = false
         SchoolAPI.getCanceled(completion: { (success, msg, data) in
             self.tableView.isUserInteractionEnabled = true
@@ -87,7 +85,7 @@ class HomeMyVC: UIViewController{
         versionLabel.text = "ユニツ \(appVersion)-(\(minorVersion))"
         versionLabel.textAlignment = .center
         versionLabel.font = UIFont.systemFont(ofSize: 13)
-        versionLabel.textColor = Color_Main.lighter()
+        versionLabel.textColor = Color_GreyFont
     }
     
     @objc func userAccountImageTapped(tapGestureRecognizer: UITapGestureRecognizer)
@@ -101,15 +99,16 @@ class HomeMyVC: UIViewController{
         userAccountLogo.image = UIImage(named: "icon_user")
         userAccountEmail.text = UserData.email
         userAccountEmail.textAlignment = .center
-        userAccountEmail.textColor = Color_Main.lighter()
+        userAccountEmail.textColor = Color_GreyFont
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(userAccountImageTapped(tapGestureRecognizer:)))
         userAccountLogo.isUserInteractionEnabled = true
         userAccountLogo.addGestureRecognizer(tapGestureRecognizer)
         self.title = "アカウント"
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = Color_Back
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
+        tableView.backgroundColor = Color_Back
         self.view.addSubview(tableView)
         self.view.addSubview(userAccountLogo)
         self.view.addSubview(userAccountEmail)
@@ -176,13 +175,14 @@ extension HomeMyVC:  UITableViewDelegate, UITableViewDataSource{
         icon.image = UIImage(named: "menu_icon_\(indexPath.row)")
         newIcon.isHidden = true
         newIcon.image = UIImage(named: "menu_new_icon")
-        text.textColor = Color_Main.lighter()
+        text.textColor = Color_GreyFont
         text.text = menuList[indexPath.row]
         text.textAlignment = .center
         text.font = UIFont.boldSystemFont(ofSize: 14)
         cell.addSubview(icon)
         cell.addSubview(newIcon)
         cell.addSubview(text)
+        cell.backgroundColor = Color_Back
         icon.snp.makeConstraints { (make) in
             make.height.width.equalTo(25)
             make.left.equalToSuperview()

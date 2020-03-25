@@ -59,7 +59,7 @@ class HomeTimeTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         let comaNumLabel = UILabel()
         coma.selectionStyle = .none
         coma.backgroundColor = .white
-        comaNumLabel.textColor = Color_Back.darkened()
+        comaNumLabel.textColor = Color_GreyFont
         comaNumLabel.textAlignment = .center
         comaNumLabel.backgroundColor = Color_Back
         comaNumLabel.text = "\(comaNo)"
@@ -120,7 +120,7 @@ class HomeTimeTableVC: UIViewController, UITableViewDelegate, UITableViewDataSou
         weekdayLineCellView.isUserInteractionEnabled = false
         for week in 0...weekDayNum-1{
             let weekLabel = UILabel()
-            weekLabel.textColor = Color_Back.darkened()
+            weekLabel.textColor = Color_GreyFont
             weekLabel.font =  UIFont.boldSystemFont(ofSize: 15)
             weekLabel.backgroundColor =  Color_Back
             weekLabel.text = weekday[week]

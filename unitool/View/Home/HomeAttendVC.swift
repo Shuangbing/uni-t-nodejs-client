@@ -62,7 +62,7 @@ class HomeAttendVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         noAttendIMG.image = UIImage(named: "noAttend")
         noAttendText.text = "出席情報がありません\n上からスワイプすると更新できます"
         noAttendText.font = UIFont.systemFont(ofSize: 13)
-        noAttendText.textColor = Color_Main.lighter()
+        noAttendText.textColor = Color_GreyFont
         noAttendText.textAlignment = .center
         noAttendText.numberOfLines = 0
         self.view.addSubview(noAttendIMG)
@@ -168,9 +168,9 @@ class AttendSendVC: UIViewController{
             SchoolAPI.sendAttend(completion: { (success, msg, data) in
                 switch success{
                 case true:
-                    showAlert(type: 1, msg: msg ?? "完成")
                     self.navigationController?.popToRootViewController(animated: true)
                     self.dismiss(animated: true)
+                    showAlert(type: 1, msg: msg ?? "完成")
                 case false:
                     showAlert(type: 2, msg: msg ?? "エラー")
                 }
@@ -234,16 +234,16 @@ func getAttendCell(subject: String, users: String) -> UITableViewCell {
     let SubjcetLabel = UILabel()
     let TeacherLabel = UILabel()
     SubjcetLabel.text = subject
-    SubjcetLabel.textColor = Color_Main
+    SubjcetLabel.textColor = Color_GreyFont
     TeacherLabel.text = "\(users)名"
     TeacherLabel.font = UIFont.systemFont(ofSize: 15)
-    TeacherLabel.textColor = Color_Main
+    TeacherLabel.textColor = Color_GreyFont
     let SubjectICON = UIImageView()
     SubjectICON.image = UIImage(named: "cell_subject")
     let TeacherICON = UIImageView()
     TeacherICON.image = UIImage(named: "cell_teacher")
     let AttendCell = UITableViewCell()
-    AttendCell.backgroundColor = .white
+    AttendCell.backgroundColor = Color_White
     AttendCell.addSubview(SubjcetLabel)
     AttendCell.addSubview(TeacherLabel)
     AttendCell.addSubview(SubjectICON)

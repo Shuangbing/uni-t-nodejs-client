@@ -49,6 +49,7 @@ class SubScoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         self.title = "成績照会"
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = Color_White
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(backMyEvent(_:)))
         self.view.addSubview(tableView)
         tableView.snp.makeConstraints { (make) in
@@ -73,10 +74,10 @@ class SubScoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         ResLabel.textColor = .white
         SubjcetLabel.text = subject
         SubjcetLabel.font = UIFont.systemFont(ofSize: 16)
-        SubjcetLabel.textColor = Color_Main
+        SubjcetLabel.textColor = Color_GreyFont
         ScoreLabel.text = "単位数 \(score)"
         ScoreLabel.font = UIFont.systemFont(ofSize: 15)
-        ScoreLabel.textColor = Color_Main
+        ScoreLabel.textColor = Color_GreyFont
         if subject.count > 15 {SubjcetLabel.font = UIFont.systemFont(ofSize: 10)}
         switch res {
         case "不可":
@@ -97,7 +98,7 @@ class SubScoreVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
         let ScoreICON = UIImageView()
         ScoreICON.image = UIImage(named: "cell_score")
         let AttendCell = UITableViewCell()
-        AttendCell.backgroundColor = .white
+        AttendCell.backgroundColor = Color_White
         AttendCell.addSubview(SubjcetLabel)
         AttendCell.addSubview(ScoreLabel)
         AttendCell.addSubview(SubjectICON)

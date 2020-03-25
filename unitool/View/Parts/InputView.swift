@@ -30,19 +30,19 @@ class InputView: UIView, UITextFieldDelegate{
     
     //common func to init our view
     private func setupView() {
-        backgroundColor = .white
+        backgroundColor = Color_Back
         self.addSubview(Lable)
         self.addSubview(Input)
         self.addSubview(Line)
-        Lable.textColor = Color_Main
+        Lable.textColor = Color_GreyFont
         Lable.font = UIFont.systemFont(ofSize: 13)
         Lable.textAlignment = .left
         Input.delegate = self
-        Input.textColor = Color_Sub
+        Input.textColor = Color_GreyFont
         Input.font = UIFont.systemFont(ofSize: 17)
         Input.autocapitalizationType = .none
         Line.progress = 0
-        Line.trackTintColor = Color_Back
+        Line.trackTintColor = Color_LightFont
         Line.progressTintColor = Color_Sub
         Lable.snp.makeConstraints({ (make) in
             make.left.equalTo(self)

@@ -12,11 +12,35 @@ let Animation_Table = [AnimationType.from(direction: .bottom, offset: 30.0)]
 let fromAnimation = AnimationType.from(direction: .right, offset: 30.0)
 let zoomAnimation = AnimationType.zoom(scale: 0.2)
 
-let Color_Main = UIColor(hexString: "50505B")
-let Color_Sub = UIColor(hexString: "31BFE1")
-let Color_Back = UIColor(hexString: "F3F2F3")
+let Color_Main = UIColor(named: "MainColor")!
+let Color_Sub = UIColor(named: "SubColor")!
+let Color_Back = UIColor(named: "BackgroundColor")!
+let Color_GreyFont = UIColor(named: "GreyFontColor")!
+let Color_LightFont = UIColor(named: "LightFontColor")!
+let Color_White = UIColor(named: "White")!
 
-let SubjectColor = [UIColor(hexString: "4c6ca0"),UIColor(hexString: "ff4945"),UIColor(hexString: "ff7eb9"),UIColor(hexString: "ffcc00"),UIColor(hexString: "663656"),UIColor(hexString: "9b30ff"),UIColor(hexString: "fb9292"),UIColor(hexString: "009BB2"),UIColor(hexString: "3c3c3c"),UIColor(hexString: "655252")]
+
+let SubjectColor = [
+UIColor(named: "SubjectColor-1")!,
+UIColor(named: "SubjectColor-2")!,
+UIColor(named: "SubjectColor-3")!,
+UIColor(named: "SubjectColor-4")!,
+UIColor(named: "SubjectColor-5")!,
+UIColor(named: "SubjectColor-6")!,
+UIColor(named: "SubjectColor-7")!,
+UIColor(named: "SubjectColor-8")!,
+UIColor(named: "SubjectColor-9")!,
+UIColor(named: "SubjectColor-10")!,
+]
+
+extension UITraitCollection {
+    public static var isDarkMode: Bool {
+        if #available(iOS 13, *), current.userInterfaceStyle == .dark {
+            return true
+        }
+        return false
+    }
+}
 
 extension UIColor {
     convenience init(hex: String, alpha: CGFloat) {

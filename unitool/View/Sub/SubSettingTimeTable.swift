@@ -95,7 +95,7 @@ class SubSettingTimeTable: UIViewController, UIWebViewDelegate{
     
     func setupVC(){
         self.title = "時間割設定"
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = Color_Back
         
         periodTotal.Lable.text = "時限数"
         periodTotal.Input.keyboardType = .numberPad
@@ -111,16 +111,16 @@ class SubSettingTimeTable: UIViewController, UIWebViewDelegate{
         nofityView.Line.isHidden = true
         let nofityText = UILabel()
         nofityText.text = "授業開始前通知(10分前)"
-        nofityText.textColor = Color_Main
+        nofityText.textColor = Color_GreyFont
         nofityText.font = UIFont.systemFont(ofSize: 15)
         
         nofitySelector.isOn = UserSetting["timetable"]["nofity"].boolValue
-        nofitySelector.onTintColor = Color_Sub
+        nofitySelector.onTintColor = Color_GreyFont
 
         weekdaySelect.insertSegment(withTitle: "しない", at: 0, animated: false)
         weekdaySelect.insertSegment(withTitle: "土", at: 1, animated: false)
         weekdaySelect.insertSegment(withTitle: "土日", at: 2, animated: false)
-        weekdaySelect.tintColor = Color_Sub
+        weekdaySelect.tintColor = Color_GreyFont
         weekdaySelect.selectedSegmentIndex = UserSetting["timetable"]["weekday"].intValue
         
         SaveSetting.setTitle("保存", for: .normal)

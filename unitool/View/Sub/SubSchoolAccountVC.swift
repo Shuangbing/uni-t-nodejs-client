@@ -29,8 +29,8 @@ class SubSchoolAccountVC: UIViewController{
             SchoolAPI.verify(completion: { (success, msg) in
                 switch success{
                 case true:
-                    showAlert(type: 1, msg: msg ?? "完了")
                     self.dismiss(animated: true)
+                    showAlert(type: 1, msg: msg ?? "完了")
                 case false:
                     showAlert(type: 2, msg: msg ?? "エラー")
                 }
@@ -42,13 +42,13 @@ class SubSchoolAccountVC: UIViewController{
     
     @objc func delSchoolAccount(){
         updateAuthToken(token: "none")
-        showAlert(type: 1, msg: "削除しました")
         self.dismiss(animated: true)
+        showAlert(type: 1, msg: "削除しました")
     }
     
     func setupVC_Del(){
         self.title = "学内アカウント"
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = Color_Back
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(backMyEvent(_:)))
         InputACUser.Lable.text = "アカウント"
         InputACPsw.Lable.text = "パスワード"
@@ -86,7 +86,7 @@ class SubSchoolAccountVC: UIViewController{
     
     func setupVC_Add(){
         self.title = "学内アカウント"
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = Color_Back
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(backMyEvent(_:)))
         InputACUser.Lable.text = "アカウント"
         InputACPsw.Lable.text = "パスワード"

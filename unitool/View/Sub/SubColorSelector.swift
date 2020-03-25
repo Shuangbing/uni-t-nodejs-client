@@ -17,7 +17,6 @@ class SubColorSelector: UIViewController, UITableViewDelegate, UITableViewDataSo
         let color = UITableViewCell()
         color.backgroundColor = .white
         color_view.backgroundColor = SubjectColor[indexPath.row]
-        color_view.alpha = 0.6
         color.addSubview(color_view)
         color_view.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()

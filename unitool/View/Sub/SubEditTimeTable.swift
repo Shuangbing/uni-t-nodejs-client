@@ -46,7 +46,6 @@ class SubEditTimeTable: UIViewController{
         ButtonColor.setBackgroundImage(UIImage(color: SubjectColor[ButtonColor.tag]), for: .normal)
         ButtonColor.setBackgroundImage(UIImage(color: SubjectColor[ButtonColor.tag].darkened()), for: .highlighted)
         ButtonColor.setTitle("背景色", for: .normal)
-        ButtonColor.alpha = 0.6
         ButtonColor.addTarget(self, action: #selector(self.selectColorEvent), for: .touchUpInside)
         mainView.addSubview(ButtonColor)
         ButtonColor.snp.makeConstraints { (make) in
@@ -183,11 +182,11 @@ class SubEditTimeTable: UIViewController{
     }
     
     func setupVC(){
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = Color_Back
         self.title = "\(weekday[weekEdit]) \(comaEdit)時限"
         scrollView.backgroundColor = .clear
         scrollView.isScrollEnabled = true
-        mainView.backgroundColor = .white
+        mainView.backgroundColor = Color_Back
         self.view.addSubview(scrollView)
         scrollView.addSubview(mainView)
         scrollView.snp.makeConstraints { (make) in
