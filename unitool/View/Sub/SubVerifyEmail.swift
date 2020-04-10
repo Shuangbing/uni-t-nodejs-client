@@ -24,7 +24,7 @@ class SubVerifyEmail: UIViewController, UITextFieldDelegate{
     
     func setupVC(){
         self.title = "メールアドレス認証"
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = Color_White
         
         InputOneTimeCode.Lable.text = "認証コード"
         InputOneTimeCode.Input.keyboardType = .numberPad

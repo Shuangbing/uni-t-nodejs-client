@@ -106,7 +106,6 @@ class HomeAttendVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     @objc func getAttendListEvent() {
-        print(UserData)
         SchoolAPI.getAttendList(completion: { (success, msg, data) in
             self.refreshControl.beginRefreshing()
             self.refreshControlValueChanged(sender: self.refreshControl)

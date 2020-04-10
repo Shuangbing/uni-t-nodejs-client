@@ -7,7 +7,6 @@ target 'unitool' do
   pod 'Alamofire'
   pod 'SwiftyJSON'
   pod "ViewAnimator"
-  pod 'StatusAlert'
   pod 'RealmSwift'
   use_frameworks!
 

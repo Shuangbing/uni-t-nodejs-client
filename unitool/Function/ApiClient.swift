@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import StatusAlert
 import Alamofire
 import SwiftyJSON
 
@@ -98,7 +97,6 @@ class UnitUser: NSObject{
         ]
         //---------Login---------
         Alamofire.request(API_URL+"/user/auth/login", method: .post, parameters: parameters).responseJSON { response in
-            print(response.result)
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
@@ -511,7 +509,7 @@ func showAlert(type: Int, msg: String) {
         title = "完了"
         HapticFeedback.Notification.pop()
     case 2:
-        title = "エラー"
+        title = "メッセージ"
         HapticFeedback.Notification.failed()
     case 3:
         title = "エラー"

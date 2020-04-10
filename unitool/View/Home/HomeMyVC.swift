@@ -11,7 +11,7 @@ import UIKit
 
 class HomeMyVC: UIViewController{
     let menuList = ["ログアウト","成績照会","休講情報","学内アカウント設定"]
-    let newMenu = [2]
+    let newMenu = [5]
     let tableView = UITableView()
     let versionLabel = UILabel()
     

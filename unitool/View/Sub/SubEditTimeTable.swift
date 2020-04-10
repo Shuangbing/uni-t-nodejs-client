@@ -182,11 +182,11 @@ class SubEditTimeTable: UIViewController{
     }
     
     func setupVC(){
-        self.view.backgroundColor = Color_Back
+        self.view.backgroundColor = Color_White
         self.title = "\(weekday[weekEdit]) \(comaEdit)時限"
         scrollView.backgroundColor = .clear
         scrollView.isScrollEnabled = true
-        mainView.backgroundColor = Color_Back
+        mainView.backgroundColor = Color_White
         self.view.addSubview(scrollView)
         scrollView.addSubview(mainView)
         scrollView.snp.makeConstraints { (make) in

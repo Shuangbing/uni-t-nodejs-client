@@ -48,7 +48,7 @@ class SubSchoolAccountVC: UIViewController{
     
     func setupVC_Del(){
         self.title = "学内アカウント"
-        self.view.backgroundColor = Color_Back
+        self.view.backgroundColor = Color_White
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(backMyEvent(_:)))
         InputACUser.Lable.text = "アカウント"
         InputACPsw.Lable.text = "パスワード"
@@ -86,7 +86,7 @@ class SubSchoolAccountVC: UIViewController{
     
     func setupVC_Add(){
         self.title = "学内アカウント"
-        self.view.backgroundColor = Color_Back
+        self.view.backgroundColor = Color_White
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(backMyEvent(_:)))
         InputACUser.Lable.text = "アカウント"
         InputACPsw.Lable.text = "パスワード"

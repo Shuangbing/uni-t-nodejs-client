@@ -30,7 +30,7 @@ class InputView: UIView, UITextFieldDelegate{
     
     //common func to init our view
     private func setupView() {
-        backgroundColor = Color_Back
+        backgroundColor = Color_White
         self.addSubview(Lable)
         self.addSubview(Input)
         self.addSubview(Line)

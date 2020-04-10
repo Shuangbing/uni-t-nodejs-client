@@ -95,7 +95,7 @@ class SubSettingTimeTable: UIViewController, UIWebViewDelegate{
     
     func setupVC(){
         self.title = "時間割設定"
-        self.view.backgroundColor = Color_Back
+        self.view.backgroundColor = Color_White
         
         periodTotal.Lable.text = "時限数"
         periodTotal.Input.keyboardType = .numberPad
