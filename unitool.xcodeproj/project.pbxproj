@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -35,8 +35,8 @@
 		50F08C3B21A3F1B100EDFE7A /* DBManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F08C3A21A3F1B100EDFE7A /* DBManage.swift */; };
 		50F5E70E21B94D1500BC26EE /* SubAccountSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F5E70D21B94D1500BC26EE /* SubAccountSetting.swift */; };
 		50FD8E7C21AD020A009029B0 /* ComaTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FD8E7B21AD020A009029B0 /* ComaTable.swift */; };
-		581D3F458F176F6863E90740 /* Pods_unitool.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18469344E561CE1D960CBA3A /* Pods_unitool.framework */; };
 		5C9368083BDBD13981CB31EB /* Pods_unitoolTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 690BFFCAD3133B75D0102ED9 /* Pods_unitoolTests.framework */; };
+		AD21F18024405D2800BA6F14 /* Pods_unitool.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18469344E561CE1D960CBA3A /* Pods_unitool.framework */; };
 		ADDAECA423EA81ED0063C435 /* SubCanceledVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDAECA323EA81ED0063C435 /* SubCanceledVC.swift */; };
 		C6787D3F29BEF41AEA3C5973 /* Pods_unitoolUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 365E7F866A781064DF6E7F66 /* Pods_unitoolUITests.framework */; };
 /* End PBXBuildFile section */
@@ -101,6 +101,15 @@
 		690BFFCAD3133B75D0102ED9 /* Pods_unitoolTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_unitoolTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88DB216245F7ACA189EC8D6D /* Pods-unitool.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unitool.release.xcconfig"; path = "Pods/Target Support Files/Pods-unitool/Pods-unitool.release.xcconfig"; sourceTree = "<group>"; };
 		A53512C2DA4CADFD89F134CF /* Pods-unitoolUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unitoolUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-unitoolUITests/Pods-unitoolUITests.release.xcconfig"; sourceTree = "<group>"; };
+		AD21F17824405B6800BA6F14 /* realm-swift-4.4.0 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "realm-swift-4.4.0"; path = "../../Downloads/realm-swift-4.4.0"; sourceTree = "<group>"; };
+		AD21F17924405BA200BA6F14 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "../../Downloads/realm-swift-4.4.0/catalyst/swift-11.4/Realm.framework"; sourceTree = "<group>"; };
+		AD21F17A24405BA200BA6F14 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "../../Downloads/realm-swift-4.4.0/catalyst/swift-11.4/RealmSwift.framework"; sourceTree = "<group>"; };
+		AD21F1892440606800BA6F14 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		AD21F18B2440606800BA6F14 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AD21F18D2440606900BA6F14 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AD21F1902440606900BA6F14 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		AD21F1922440606900BA6F14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD21F1932440606900BA6F14 /* unitool_mac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = unitool_mac.entitlements; sourceTree = "<group>"; };
 		ADDAECA323EA81ED0063C435 /* SubCanceledVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubCanceledVC.swift; sourceTree = "<group>"; };
 		DCAE654E2B40AB2280666884 /* Pods-unitool.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unitool.debug.xcconfig"; path = "Pods/Target Support Files/Pods-unitool/Pods-unitool.debug.xcconfig"; sourceTree = "<group>"; };
 		E81E8B1BA75E1EC4E8A53B94 /* Pods-unitoolUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unitoolUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-unitoolUITests/Pods-unitoolUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -111,7 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				581D3F458F176F6863E90740 /* Pods_unitool.framework in Frameworks */,
+				AD21F18024405D2800BA6F14 /* Pods_unitool.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,6 +159,9 @@
 		31871135BF4CC4BF68A43D59 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AD21F17924405BA200BA6F14 /* Realm.framework */,
+				AD21F17A24405BA200BA6F14 /* RealmSwift.framework */,
+				AD21F17824405B6800BA6F14 /* realm-swift-4.4.0 */,
 				18469344E561CE1D960CBA3A /* Pods_unitool.framework */,
 				690BFFCAD3133B75D0102ED9 /* Pods_unitoolTests.framework */,
 				365E7F866A781064DF6E7F66 /* Pods_unitoolUITests.framework */,
@@ -203,6 +215,7 @@
 				507ACE0821A23F1700F591D5 /* unitool */,
 				507ACE1D21A23F1900F591D5 /* unitoolTests */,
 				507ACE2821A23F1900F591D5 /* unitoolUITests */,
+				AD21F1882440606800BA6F14 /* unitool-mac */,
 				507ACE0721A23F1700F591D5 /* Products */,
 				05465CBBCE68A795DD74912F /* Pods */,
 				31871135BF4CC4BF68A43D59 /* Frameworks */,
@@ -273,6 +286,19 @@
 			path = Parts;
 			sourceTree = "<group>";
 		};
+		AD21F1882440606800BA6F14 /* unitool-mac */ = {
+			isa = PBXGroup;
+			children = (
+				AD21F1892440606800BA6F14 /* AppDelegate.swift */,
+				AD21F18B2440606800BA6F14 /* ViewController.swift */,
+				AD21F18D2440606900BA6F14 /* Assets.xcassets */,
+				AD21F18F2440606900BA6F14 /* Main.storyboard */,
+				AD21F1922440606900BA6F14 /* Info.plist */,
+				AD21F1932440606900BA6F14 /* unitool_mac.entitlements */,
+			);
+			path = "unitool-mac";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -339,9 +365,9 @@
 		507ACDFE21A23F1700F591D5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1010;
-				ORGANIZATIONNAME = "そうへい";
+				ORGANIZATIONNAME = "Shuangbing He";
 				TargetAttributes = {
 					507ACE0521A23F1700F591D5 = {
 						CreatedOnToolsVersion = 10.1;
@@ -365,7 +391,7 @@
 				};
 			};
 			buildConfigurationList = 507ACE0121A23F1700F591D5 /* Build configuration list for PBXProject "unitool" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 11.4";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -569,6 +595,14 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		AD21F18F2440606900BA6F14 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AD21F1902440606900BA6F14 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -706,6 +740,7 @@
 				MARKETING_VERSION = 1.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.uni-t.unitool";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -729,6 +764,7 @@
 				MARKETING_VERSION = 1.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.uni-t.unitool";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
